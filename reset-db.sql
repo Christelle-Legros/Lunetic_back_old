@@ -65,8 +65,7 @@ CREATE TABLE IF NOT EXISTS `projet3_lunetic`.`models` (
   `name` VARCHAR(100) NOT NULL,
   `id_collection` INT NOT NULL,
   PRIMARY KEY (`id_model`),
-  INDEX `id_collection_idx` (`id_collection` ASC) VISIBLE,
-  CONSTRAINT `id_collection`
+  CONSTRAINT `fk_models_collections`
     FOREIGN KEY (`id_collection`)
     REFERENCES `projet3_lunetic`.`collections` (`id_collection`)
     ON DELETE NO ACTION
@@ -96,14 +95,12 @@ CREATE TABLE IF NOT EXISTS `projet3_lunetic`.`models_colors` (
   `id_color` INT NULL,
   `id_model` INT NULL,
   PRIMARY KEY (`id_model_color`),
-  INDEX `id_colors_idx` (`id_color` ASC) VISIBLE,
-  INDEX `id_models_idx` (`id_model` ASC) VISIBLE,
-  CONSTRAINT `id_color`
+  CONSTRAINT `fk_models_colors_colors`
     FOREIGN KEY (`id_color`)
     REFERENCES `projet3_lunetic`.`colors` (`id_color`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `id_model`
+  CONSTRAINT `fk_models_colors_models`
     FOREIGN KEY (`id_model`)
     REFERENCES `projet3_lunetic`.`models` (`id_model`)
     ON DELETE NO ACTION
@@ -123,14 +120,12 @@ CREATE TABLE IF NOT EXISTS `projet3_lunetic`.`wishlists` (
   `name` VARCHAR(255) NOT NULL,
   `id_model_color` INT NOT NULL,
   PRIMARY KEY (`id_wishlist`),
-  INDEX `id_optician_idx` (`id_optician` ASC) VISIBLE,
-  INDEX `id_model_color_idx` (`id_model_color` ASC) VISIBLE,
-  CONSTRAINT `id_optician`
+  CONSTRAINT `fk_whishlists_opticians`
     FOREIGN KEY (`id_optician`)
     REFERENCES `projet3_lunetic`.`opticians` (`id_optician`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `id_model_color`
+  CONSTRAINT `fk_whishlists_models_color`
     FOREIGN KEY (`id_model_color`)
     REFERENCES `projet3_lunetic`.`models_colors` (`id_model_color`)
     ON DELETE NO ACTION
@@ -148,8 +143,7 @@ CREATE TABLE IF NOT EXISTS `projet3_lunetic`.`branches` (
   `name` VARCHAR(255) NOT NULL,
   `id_color` INT NOT NULL,
   PRIMARY KEY (`id_branch`),
-  INDEX `id_color_idx` (`id_color` ASC) VISIBLE,
-  CONSTRAINT `id_color`
+  CONSTRAINT `fk_branches_colors`
     FOREIGN KEY (`id_color`)
     REFERENCES `projet3_lunetic`.`colors` (`id_color`)
     ON DELETE NO ACTION
@@ -167,14 +161,12 @@ CREATE TABLE IF NOT EXISTS `projet3_lunetic`.`models_branches` (
   `id_model` INT NOT NULL,
   `id_branch` INT NOT NULL,
   PRIMARY KEY (`id_models_branches`),
-  INDEX `id_model_idx` (`id_model` ASC) VISIBLE,
-  INDEX `id_branch_idx` (`id_branch` ASC) VISIBLE,
-  CONSTRAINT `id_model`
+  CONSTRAINT `fk_models_branches_models`
     FOREIGN KEY (`id_model`)
     REFERENCES `projet3_lunetic`.`models` (`id_model`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `id_branch`
+  CONSTRAINT `fk_models_branches_branches`
     FOREIGN KEY (`id_branch`)
     REFERENCES `projet3_lunetic`.`branches` (`id_branch`)
     ON DELETE NO ACTION
@@ -194,8 +186,7 @@ CREATE TABLE IF NOT EXISTS `projet3_lunetic`.`orders` (
   `date` DATE NOT NULL,
   `link_pdf` VARCHAR(255) NULL,
   PRIMARY KEY (`id_order`),
-  INDEX `id_optician_idx` (`id_optician` ASC) VISIBLE,
-  CONSTRAINT `id_optician`
+  CONSTRAINT `fk_orders_opticians`
     FOREIGN KEY (`id_optician`)
     REFERENCES `projet3_lunetic`.`opticians` (`id_optician`)
     ON DELETE NO ACTION
